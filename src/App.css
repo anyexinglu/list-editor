@@ -1,38 +1,65 @@
+body {
+  background: #eee;
+}
+div {
+  outline: none;
+}
+
 .App {
-  text-align: center;
+  min-height: 800px;
+  cursor: text;
+  background-color: #fff;
+  margin: 70px;
+  padding: 20px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.node-tree {
+  min-height: 800px;
+  cursor: text;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.node {
+  position: relative;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.children {
+  border-left: 1px solid #ebebeb;
+  margin-left: 12px;
+  padding-left: 16px;
+  padding-bottom: 4px;
 }
+.bullet {
+  width: 6px;
+  height: 6px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  -ms-border-radius: 9px;
+  border-radius: 9px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+  cursor: pointer;
+  transition: border 0.2s;
 
-.App-link {
-  color: #61dafb;
+  position: absolute;
+  left: 3px;
+  top: 5px;
+  z-index: 2;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dot {
+  border: 3px solid #666;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+}
+.content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 24px;
+  min-height: 24px;
+  padding: 2px 0 3px 28px;
+  position: relative;
+  z-index: 1;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  font-size: 16px;
 }
