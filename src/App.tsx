@@ -1,10 +1,23 @@
-import React from "react";
-import { generateId } from "./utils";
+import React, { useState, useEffect, useReducer } from "react";
+import reducer from "./reducer";
+import { NodeValue } from "./interface";
+import { generateId, addId } from "./utils";
 import "./App.css";
 
-function renderList(item: any) {
+const EVENT_KEY = {
+  ENTER: "Enter",
+  BACKSPACE: "Backspace"
+};
+
+function NodeList({
+  item,
+  dispatch
+}: {
+  item: NodeValue;
+  dispatch: React.Dispatch<any>;
+}) {
   const children = item.children || [];
-  const id = generateId();
+  const id = item.id;
 
   return (
     <div className="node" id={id} key={id}>
@@ -12,36 +25,81 @@ function renderList(item: any) {
         <div className="bullet">
           <div className="dot" />
         </div>
-        <div className="content" contentEditable>
-          {item.text}
-        </div>
+        <div
+          className="content"
+          contentEditable
+          onInput={e => {
+            console.log("...onInput e", e.target, (e.target as any).innerHTML);
+            // setIsEditing(true);
+          }}
+          onBlur={e => {
+            console.log("...onBlur e", e.target, (e.target as any).innerHTML);
+            dispatch({
+              type: "UPDATE_NODE_VALUE",
+              payload: {
+                id,
+                value: (e.target as any).innerHTML
+              }
+            });
+            // setIsEditing(false);
+          }}
+          dangerouslySetInnerHTML={{ __html: item.value }}
+          onKeyDown={e => {
+            console.log("...e", e, e.key);
+            if (e.key === EVENT_KEY.ENTER) {
+              debugger;
+              e.preventDefault();
+
+              dispatch({
+                type: "INSERT_AFTER_NODE",
+                payload: {
+                  id,
+                  item: {
+                    value: "",
+                    id: generateId(),
+                    children: []
+                  }
+                }
+              });
+            }
+          }}
+        ></div>
       </div>
       {children.length ? (
         <div className="children">
-          {(children || []).map((child: any) => renderList(child))}
+          {(children || []).map((child: NodeValue, index: number) => (
+            <NodeList key={index} item={child} dispatch={dispatch} />
+          ))}
         </div>
       ) : null}
     </div>
   );
 }
 
-const value = [
+const defaultValue: NodeValue[] = addId([
   {
-    text: "我是父节点",
+    value: "我是父节点",
     children: [
       {
-        text: "这是子节点的内容"
+        value: "这是子节点的内容"
       }
     ]
   }
-];
+]);
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, {
+    value: defaultValue
+  });
+  const value = state.value;
   return (
-    <div className="App node-tree">
-      {value.map(item => {
-        return renderList(item);
-      })}
+    <div>
+      {/* <Test /> */}
+      <div className="App node-tree">
+        {value.map(item => {
+          return <NodeList item={item} dispatch={dispatch} />;
+        })}
+      </div>
     </div>
   );
 }
