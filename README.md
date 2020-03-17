@@ -14,9 +14,9 @@ yarn && yarn dev
 
 - [x] 行尾 enter 新增节点
 - [x] 支持移动光标到下一行
-- [ ] 行中 enter 切割行
+- [ ] 行中 enter 切割行 @anyexinglu
 - [ ] tab、shift+tab，实现缩进、去缩进
-- [ ] 支持跨行选中
+- [ ] 支持跨行选中 @lanpangci
 - [ ] 支持对选中区域操作：删除内容、回车（删除并跨行）、缩进/去缩进
 - [ ] ctrl+enter：表示完成，删除线
 
