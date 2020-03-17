@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useReducer } from "react";
 import reducer from "./reducer";
 import { NodeValue } from "./interface";
-import { generateId, addId } from "./utils";
+import { generateId, addId, setCaretPosition } from "./utils";
+
 import "./App.css";
 
 const EVENT_KEY = {
@@ -27,10 +28,30 @@ function NodeList({
         </div>
         <div
           className="content"
+          spellCheck="false"
+          autoCapitalize="off"
           contentEditable
+          id={`content-${id}`}
           onInput={e => {
             console.log("...onInput e", e.target, (e.target as any).innerHTML);
             // setIsEditing(true);
+          }}
+          onCopy={e => {
+            console.log("oncopy", e);
+          }}
+          onPaste={e => {
+            let paste = (
+              e.clipboardData || (window as any).clipboardData
+            ).getData("text");
+            paste = paste.toUpperCase();
+            console.log("onpaste", e, paste);
+
+            const selection = window.getSelection() as any;
+            if (!selection.rangeCount) return false;
+            selection.deleteFromDocument();
+            selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+
+            e.preventDefault();
           }}
           onBlur={e => {
             console.log("...onBlur e", e.target, (e.target as any).innerHTML);
@@ -45,22 +66,25 @@ function NodeList({
           }}
           dangerouslySetInnerHTML={{ __html: item.value }}
           onKeyDown={e => {
-            console.log("...e", e, e.key);
             if (e.key === EVENT_KEY.ENTER) {
-              debugger;
               e.preventDefault();
-
+              const newId = generateId();
               dispatch({
                 type: "INSERT_AFTER_NODE",
                 payload: {
                   id,
                   item: {
                     value: "",
-                    id: generateId(),
+                    id: newId,
                     children: []
                   }
                 }
               });
+              // TODO，改成active的store
+              setTimeout(() => {
+                let contentCtrl = document.getElementById(`content-${newId}`);
+                setCaretPosition(contentCtrl, 0);
+              }, 0);
             }
           }}
         ></div>

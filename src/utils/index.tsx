@@ -1,6 +1,6 @@
 import { NodeValue } from "../interface";
 
-// export { moveCursorToNextLine } from './Cursor'
+export { setCaretPosition } from "./Cursor";
 
 export const generateId = (() => {
   let i = 0;
