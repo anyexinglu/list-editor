@@ -1,4 +1,3 @@
-import { generateId } from "./utils";
 import { NodeValue } from "./interface";
 
 interface EditorState {
@@ -25,12 +24,12 @@ const replaceNode = (
     if (item.id === id) {
       return {
         ...item,
-        value: nodeValue
+        value: nodeValue,
       };
     } else if (item.children) {
       return {
         ...item,
-        children: replaceNode(item.children, id, nodeValue)
+        children: replaceNode(item.children, id, nodeValue),
       };
     }
     return item;
@@ -51,7 +50,7 @@ const insertAfterNode = (
     } else if (cloneItem.children) {
       cloneValue.splice(index, 1, {
         ...cloneItem,
-        children: insertAfterNode(cloneItem.children, id, nodeItem, layer + 1)
+        children: insertAfterNode(cloneItem.children, id, nodeItem, layer + 1),
       });
     }
   });
@@ -71,7 +70,7 @@ export default function reducer(
 
       return {
         ...state,
-        value: newValue
+        value: newValue,
       };
     }
     case "INSERT_AFTER_NODE": {
@@ -95,21 +94,21 @@ export default function reducer(
 
       return {
         ...state,
-        value: newValue
+        value: newValue,
       };
     }
     case "UPDATE_VALUE": {
       const { value } = action.payload;
       return {
         ...state,
-        value
+        value,
       };
     }
     case "UPDATE_STORE": {
       const payload = action.payload;
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     }
     default: {
