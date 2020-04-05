@@ -25,14 +25,3 @@ export const addId = (nodes: NodeValue[]) => {
     return result;
   });
 };
-
-// const defaultValue: NodeValue[] = [
-//   {
-//     text: "我是父节点",
-//     children: [
-//       {
-//         text: "这是子节点的内容"
-//       }
-//     ]
-//   }
-// ];

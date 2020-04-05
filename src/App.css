@@ -63,3 +63,8 @@ div {
   user-select: text;
   font-size: 16px;
 }
+
+.selected {
+  background: #b1d7fe;
+  border-radius: 0;
+}
