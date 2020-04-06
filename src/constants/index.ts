@@ -12,5 +12,5 @@ export const EVENTS: Events = {
   end: ['touchend', 'touchcancel', 'mouseup'],
   down: ['touchstart', 'mousedown'],
   move: ['touchmove', 'mousemove'],
-  keyup: ['', 'keydown']
+  keydown: ['', 'keydown']
 }
